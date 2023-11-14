@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useRef, useState } from "react";
 import Image from "next/image";
 import InputBox from "./InputBox";
 import questionMark from "../assets/questionMark.gif";
@@ -43,6 +44,15 @@ const iwo1Labels = [
 ];
 
 const Calcualtor = () => {
+  const iwoCountSelectRef = useRef(null);
+  const [iwoCount, setIwoCount] = useState("1");
+  const iwoCountHandler = () => {
+    setIwoCount(iwoCountSelectRef.current.value);
+  };
+  const iwoReselectHandler = () => {
+    setIwoCount("1");
+    iwoCountSelectRef.current.value = "1";
+  };
   return (
     <>
       <main>
@@ -199,6 +209,7 @@ const Calcualtor = () => {
             <Heading heading={"Compare total ordered to Maximum Withholding"} />
             <InputBox
               type="select"
+              ref1={iwoCountSelectRef}
               label={
                 <>
                   How many{" "}
@@ -209,25 +220,36 @@ const Calcualtor = () => {
                 </>
               }
               idHtmlfor="iwo_received"
-              defaultValue={"1"}
+              defaultValue={iwoCount}
               options={["Select number", "1", "2", "3", "4", "5"]}
             />
             <div className="flex gap-2 border-b border-b-black pt-4 pb-1">
-              <InputButton value={"display iwos"} />
-              <Button value={"reselect"} background="grey" width="2/5" />
+              <InputButton onClick={iwoCountHandler} value={"display iwos"} />
+              <Button
+                onClick={iwoReselectHandler}
+                value={"reselect"}
+                background="grey"
+                width="2/5"
+              />
             </div>
-            <InputBox
-              label={
-                <>
-                  <abbr title="Income Withholding Orders" translate="no">
-                    IWOs
-                  </abbr>{" "}
-                  1 Total Amount to Withhold for your pay cycle
-                </>
-              }
-              idHtmlfor="iwo_1_total_amount_to_withhold_for_your_pay_cycle"
-              defaultValue={"0.00"}
-            />
+            {Array.from(
+              { length: parseInt(iwoCount) },
+              (_, index) => index + 1
+            ).map((iwo, index) => (
+              <InputBox
+                key={index}
+                label={
+                  <>
+                    <abbr title="Income Withholding Orders" translate="no">
+                      IWOs
+                    </abbr>{" "}
+                    {iwo} Total Amount to Withhold for your pay cycle
+                  </>
+                }
+                idHtmlfor={`iwo_${iwo}_total_amount_to_withhold_for_your_pay_cycle`}
+                defaultValue={"0.00"}
+              />
+            ))}
             <InputBox
               label={
                 <>

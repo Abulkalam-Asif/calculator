@@ -1,6 +1,6 @@
 import React from "react";
 
-const Button = ({ value, background = "", width = "full" }) => {
+const Button = ({ onClick, value, background = "", width = "full" }) => {
   let colorStyles = "";
   if (background === "navy") {
     colorStyles = "bg-navy text-white";
@@ -20,6 +20,7 @@ const Button = ({ value, background = "", width = "full" }) => {
     <>
       <input
         type="button"
+        onClick={onClick}
         value={value}
         className={`${widthStyles} tracking-widest uppercase border border-black text-17 p-0.5 rounded-lg ${colorStyles} hover:bg-yellow-medium hover:text-black hover:border-4 hover:border-light-blue `}
       />

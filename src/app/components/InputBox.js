@@ -11,6 +11,7 @@ const InputBox = ({
   options = [],
   disabled = false,
   mainBorder = true,
+  ref1,
 }) => {
   return (
     <>
@@ -39,6 +40,7 @@ const InputBox = ({
         {type === "select" && (
           <select
             id={idHtmlfor}
+            ref={ref1}
             defaultValue={defaultValue}
             className="w-2/5 border border-black pl-2.5 pr-0.5 focus:bg-yellow-light">
             {options.map((option, index) => {
