@@ -47,7 +47,9 @@ const Calcualtor = () => {
   const iwoCountSelectRef = useRef(null);
   const [iwoCount, setIwoCount] = useState("1");
   const iwoCountHandler = () => {
-    setIwoCount(iwoCountSelectRef.current.value);
+    if (Number(iwoCountSelectRef.current.value) > iwoCount) {
+      setIwoCount(iwoCountSelectRef.current.value);
+    }
   };
   const iwoReselectHandler = () => {
     setIwoCount("1");
